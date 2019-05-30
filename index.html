@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Negociações</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+</head>
+<body class="container">
+   <h1 class="text-center"> Negociações</h1>
+
+   <form class="form">
+
+       <div class="form-group">
+           <labe for="data"><b>Data:</b></labe>
+           <input type="date" id="data" class="form-control" required autofocus>
+       </div>
+
+       <div class="form-group">
+           <label for="quantidade">Quantidade:</label>
+           <input type="number" id="quantidade" min="1" step="1" value="1" class="form-control" required>
+       </div>
+
+       <div class="form-group">
+           <label for="valor">Valor:</label>
+           <input id="valor" type="number" min="0.01" step="0.01" value="0.01" class="form-control" required>
+       </div>
+
+       <button class="btn btn-primary text-center" type="submit">Incuir</button>
+        
+       <div class="text-center">
+           <button class="btn btn-primary text-center" type="button">Importar Negociações</button>
+           <button class="btn btn-primary text-center" type="button">Apagar</button>
+       </div>
+   </form> 
+</body>
+</html>
