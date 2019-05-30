@@ -16,7 +16,11 @@ class NegociacaoController{
      //Essa função update herda da classe View que é comum as todas a view
     // E dentro da funcao Update chama o template de cada view que não e comum em todas as paginas
         this._negociacoesView.update(this._listaNegociacoes);
-      
+
+        //Mensagem de Sucesso
+
+        this._mensagem = new Mensagem();
+        this._mensagemView = new MensagemView($('#mensagemView'));
     }
 
     adiciona(event)
@@ -26,6 +30,11 @@ class NegociacaoController{
          this._listaNegociacoes.adiciona(this.criarNegociacao());
          //Monta HTML da Nrgociação
          this._negociacoesView.update(this._listaNegociacoes);
+
+         //Mensagem
+        this._mensagem.texto = 'Negociação adicionada com sucesso';
+        this._mensagemView.update(this._mensagem);
+        //LimpaFormulario
          _limpaFormulario();
     }
     criarNegociacao(){
