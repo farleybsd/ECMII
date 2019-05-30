@@ -11,7 +11,9 @@
 <body class="container">
    <h1 class="text-center"> Negociações</h1>
 
-   <form class="form">
+   <div id="mensagemView"></div>
+
+   <form class="form" onsubmit="negociacaoController.adiciona(event)">
 
        <div class="form-group">
            <labe for="data"><b>Data:</b></labe>
@@ -25,7 +27,7 @@
 
        <div class="form-group">
            <label for="valor">Valor:</label>
-           <input id="valor" type="number" min="0.01" step="0.01" value="0.01" class="form-control" required>
+           <input id="valor" type="number" min="0.01" step="0.01" value="0.0" class="form-control" required>
        </div>
 
        <button class="btn btn-primary text-center" type="submit">Incuir</button>
@@ -35,7 +37,17 @@
            <button class="btn btn-primary text-center"  type="button">Apagar</button>
        </div>
    </form> 
-
+   <br>
+   <div id="negociacoesView"></div>
    <script src="js/app/models/ListaNegociacao.js"></script>
+   <script src="js/app/models/Negociacao.js"></script>
+   <script src="js/app/View/View.js"></script>
+   <script src="js/app/View/NegociacoesView.js"></script>
+   <script src="js/app/Controllers/NegociacaoController.js"></script>
+
+   <script>
+            let negociacaoController = new NegociacaoController();
+   
+   </script>
 </body>
 </html>
