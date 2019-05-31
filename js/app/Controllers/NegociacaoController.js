@@ -35,7 +35,7 @@ class NegociacaoController{
         this._mensagem.texto = 'Negociação adicionada com sucesso';
         this._mensagemView.update(this._mensagem);
         //LimpaFormulario
-         _limpaFormulario();
+         this._limpaFormulario();
     }
     criarNegociacao(){
         return new Negociacao(
@@ -51,5 +51,12 @@ class NegociacaoController{
         this._inputQuantidade.value = 1;
         this._inputValor.value = 0.0;
         this._inputData.focus();   
+    }
+
+    apaga(){
+        this._listaNegociacoes.esvazia();
+        this._negociacoesView.update(this._listaNegociacoes);
+        this._mensagem.texto = 'Negociação apagada com sucesso';
+        this._mensagemView.update(this._mensagem);
     }
 }
