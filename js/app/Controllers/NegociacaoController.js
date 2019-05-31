@@ -9,7 +9,14 @@ class NegociacaoController{
         
         //Criando a View da Negociações que é a tabela
         //Chama o array que contem  as negociaçoes
-        this._listaNegociacoes = new ListaNegociacao();
+        //Atualizando a view pelo Modelo
+        //No java script o objeto this ele e dinamico. Se nao colocar o this na minha funcao
+        //anonima na chamada da ListaNegociacao ele sempre sera listanegociação nao fazendo referencia
+        //NegociacaoController.
+       // this._listaNegociacoes = new ListaNegociacao(this,function(model){
+        this._listaNegociacoes = new ListaNegociacao((model) =>{
+            this._negociacoesView.update(model);
+        });
        //Seleciona a Div negociacoesView que e passado como paramentro para 
       // o construtor da Classe NegociacoesView
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
@@ -28,9 +35,7 @@ class NegociacaoController{
         event.preventDefault();
         // Adiciona uma negociação
          this._listaNegociacoes.adiciona(this.criarNegociacao());
-         //Monta HTML da Nrgociação
-         this._negociacoesView.update(this._listaNegociacoes);
-
+      
          //Mensagem
         this._mensagem.texto = 'Negociação adicionada com sucesso';
         this._mensagemView.update(this._mensagem);
@@ -55,7 +60,6 @@ class NegociacaoController{
 
     apaga(){
         this._listaNegociacoes.esvazia();
-        this._negociacoesView.update(this._listaNegociacoes);
         this._mensagem.texto = 'Negociação apagada com sucesso';
         this._mensagemView.update(this._mensagem);
     }
