@@ -8,11 +8,11 @@ class NegociacaoController{
         this._inputValor = $('#valor');
          
         
-        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
+        
         this._listaNegociacoes = new  Bind(
             new ListaNegociacao(),
-            this._negociacoesView ,
-            ['adiciona','esvazia']  
+            new NegociacoesView($('#negociacoesView')) ,
+            'adiciona','esvazia'  
         
         )
         
@@ -33,11 +33,11 @@ class NegociacaoController{
        // this._negociacoesView.update(this._listaNegociacoes);
 
         //Mensagem de Sucesso
-        this._mensagemView = new MensagemView($('#mensagemView'));
+        
         this._mensagem = new Bind(
           new Mensagem(),
-          this._mensagemView,
-            ['texto']
+          new MensagemView($('#mensagemView')),
+            'texto'
         )
         
     //     ProxyFactory.create(new Mensagem(),
