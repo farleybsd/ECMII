@@ -8,31 +8,45 @@ class NegociacaoController{
         this._inputValor = $('#valor');
          
         
-
-        this._listaNegociacoes = ProxyFactory.create(
-            new ListaNegociacao,
-            ['adiciona','esvazia'],(model) =>{
-                this._negociacoesView.update(model)
-            }
-    )
+        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
+        this._listaNegociacoes = new  Bind(
+            new ListaNegociacao(),
+            this._negociacoesView ,
+            ['adiciona','esvazia']  
+        
+        )
+        
+        
+        // ProxyFactory.create(
+        //     new ListaNegociacao,
+        //     ['adiciona','esvazia'],(model) =>{
+        //         this._negociacoesView.update(model)
+        //     }
+    //)
        /* this._listaNegociacoes = new ListaNegociacao((model) =>{
             this._negociacoesView.update(model);
         });*/
 
        
-        this._negociacoesView = new NegociacoesView($('#negociacoesView'));
+       
      
-        this._negociacoesView.update(this._listaNegociacoes);
+       // this._negociacoesView.update(this._listaNegociacoes);
 
         //Mensagem de Sucesso
-
-        this._mensagem = ProxyFactory.create(new Mensagem(),
-                ['texto'],(model)=>{
-                    this._mensagemView.update(model);  
-                }    
-    );
         this._mensagemView = new MensagemView($('#mensagemView'));
-        this._mensagemView.update(this._mensagem);
+        this._mensagem = new Bind(
+          new Mensagem(),
+          this._mensagemView,
+            ['texto']
+        )
+        
+    //     ProxyFactory.create(new Mensagem(),
+    //             ['texto'],(model)=>{
+    //                 this._mensagemView.update(model);  
+    //             }    
+    // );
+        
+       // this._mensagemView.update(this._mensagem);
     }
 
     adiciona(event)
