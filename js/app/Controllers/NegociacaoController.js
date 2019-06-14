@@ -6,28 +6,33 @@ class NegociacaoController{
         this._inputData = $('#data'); 
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
+         
         
-        //Criando a View da Negociações que é a tabela
-        //Chama o array que contem  as negociaçoes
-        //Atualizando a view pelo Modelo
-        //No java script o objeto this ele e dinamico. Se nao colocar o this na minha funcao
-        //anonima na chamada da ListaNegociacao ele sempre sera listanegociação nao fazendo referencia
-        //NegociacaoController.
-       // this._listaNegociacoes = new ListaNegociacao(this,function(model){
-        this._listaNegociacoes = new ListaNegociacao((model) =>{
+
+        this._listaNegociacoes = ProxyFactory.create(
+            new ListaNegociacao,
+            ['adiciona','esvazia'],(model) =>{
+                this._negociacoesView.update(model)
+            }
+    )
+       /* this._listaNegociacoes = new ListaNegociacao((model) =>{
             this._negociacoesView.update(model);
-        });
-       //Seleciona a Div negociacoesView que e passado como paramentro para 
-      // o construtor da Classe NegociacoesView
+        });*/
+
+       
         this._negociacoesView = new NegociacoesView($('#negociacoesView'));
-     //Essa função update herda da classe View que é comum as todas a view
-    // E dentro da funcao Update chama o template de cada view que não e comum em todas as paginas
+     
         this._negociacoesView.update(this._listaNegociacoes);
 
         //Mensagem de Sucesso
 
-        this._mensagem = new Mensagem();
+        this._mensagem = ProxyFactory.create(new Mensagem(),
+                ['texto'],(model)=>{
+                    this._mensagemView.update(model);  
+                }    
+    );
         this._mensagemView = new MensagemView($('#mensagemView'));
+        this._mensagemView.update(this._mensagem);
     }
 
     adiciona(event)
@@ -35,10 +40,9 @@ class NegociacaoController{
         event.preventDefault();
         // Adiciona uma negociação
          this._listaNegociacoes.adiciona(this.criarNegociacao());
-      
          //Mensagem
         this._mensagem.texto = 'Negociação adicionada com sucesso';
-        this._mensagemView.update(this._mensagem);
+       // this._mensagemView.update(this._mensagem);
         //LimpaFormulario
          this._limpaFormulario();
     }
@@ -61,6 +65,6 @@ class NegociacaoController{
     apaga(){
         this._listaNegociacoes.esvazia();
         this._mensagem.texto = 'Negociação apagada com sucesso';
-        this._mensagemView.update(this._mensagem);
+        //this._mensagemView.update(this._mensagem);
     }
 }
