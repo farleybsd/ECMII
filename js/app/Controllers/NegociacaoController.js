@@ -42,55 +42,38 @@ class NegociacaoController {
 
         let service = new NegociacosServices()
 
-        service.obtemNegociacoesdaSemana()
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao => {
-                    this._listaNegociacoes.adiciona(negociacao);
-                });
-                this._mensagem.texto = 'Negociações da semana obtidas com sucesso'
-            })
-            .catch(erro => this._mensagem.texto = erro);
-
-
-        service.obtemNegociacoesdaSemanaAnterior()
-            .then(negociacaoes => {
-                negociacaoes.forEach(negociacao => {
-                    this._listaNegociacoes.adiciona(negociacao)
-                });
-                this._mensagem.texto = 'Negociações da semana obtidas com sucesso'
-            })
-            .catch(erro => this._mensagem.texto = erro)
-
-
-        service.obtemNegociacoesdaSemanaRetrasada()
-        .then(negociacaoes => {
-            negociacaoes.forEach(negociacao => {
-                this._listaNegociacoes.adiciona(negociacao)
-            })
-            this._mensagem.texto = 'Negociações da semana obtidas com sucesso'
+        Promise.all(
+            [
+                service.obtemNegociacoesdaSemana(),
+                service.obtemNegociacoesdaSemanaAnterior(),
+                service.obtemNegociacoesdaSemanaRetrasada()]
+        ).then(negociacoes => {
+            negociacoes
+                .reduce((arrayachatado,array)=> arrayachatado.concat(array), [] )
+                .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao))
+            this._mensagem.texto = 'Negociacaoes importada com sucesso'
         })
-            .catch(erro => this._mensagem.texto = erro)
-    
-}
-criarNegociacao() {
-    return new Negociacao(
-        DateHelper.TextoParaData(this._inputData.value),
-        this._inputQuantidade.value,
-        this._inputValor.value
-    )
-}
+            .catch(erro => this._mensagem.texto = erro);
+    }
+    criarNegociacao() {
+        return new Negociacao(
+            DateHelper.TextoParaData(this._inputData.value),
+            this._inputQuantidade.value,
+            this._inputValor.value
+        )
+    }
 
-_limpaFormulario() {
+    _limpaFormulario() {
 
-    this._inputData.value = '';
-    this._inputQuantidade.value = 1;
-    this._inputValor.value = 0.0;
-    this._inputData.focus();
-}
+        this._inputData.value = '';
+        this._inputQuantidade.value = 1;
+        this._inputValor.value = 0.0;
+        this._inputData.focus();
+    }
 
-apaga() {
-    this._listaNegociacoes.esvazia();
-    this._mensagem.texto = 'Negociação apagada com sucesso';
+    apaga() {
+        this._listaNegociacoes.esvazia();
+        this._mensagem.texto = 'Negociação apagada com sucesso';
 
-}
+    }
 }
